@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
+
 import warnings
 import os
 import requests
 import time
 import sys
+import json
 
 from unidecode import unidecode
 
@@ -13,7 +16,9 @@ from selenium.webdriver.chrome.options import Options
 class DGBRXtractor:
     
     def __init__(self):
+        pass
         
+    def wb_start(self):    
         # Ignorar avisos
         warnings.filterwarnings('ignore')
 
@@ -21,7 +26,7 @@ class DGBRXtractor:
         self.chrome_options = Options()
         self.chrome_options.add_argument('--headless')
         self.chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        self.browser = webdriver.Chrome(executable_path='./chromedriver.exe', options=self.chrome_options)
+        self.browser = webdriver.Chrome(executable_path='./chromedriver_linux.exe', options=self.chrome_options)
 
     '''
         Este método foi desenvolvido para realizar o download de todos os arquivos do conjunto de dados a partir da sua url.
@@ -31,7 +36,10 @@ class DGBRXtractor:
         Um exemplo de uso será adicionado na pasta "exemplos"
     '''
     def get_files_by_ds_url(self, url, ext=['.csv']):
-        
+
+        #Carregar configurações do WebBrowser
+        self.wb_start()
+
         # Carregamento da página do dataset
         print('Carregando [{}]'.format(url))
         
@@ -84,9 +92,85 @@ class DGBRXtractor:
                 file_path = dataset_id + '/' + file_name
 
                 # Gravar o arquivo
-                with open(file=file_path, mode='wb') as f:
+                with open(file_path, mode='wb') as f:
                     f.write(req.content)
                     f.close()
 
         # Fechar o browser
         self.browser.close()
+
+    
+    '''
+        Este método verifica se existe algum tipo de paginação na página atual.
+    '''
+    def have_pagination(self):
+        try:
+            num_pages = self.browser.find_elements_by_css_selector('div.pagination li')[-2].text
+            return num_pages
+        except:
+            return 1
+    
+    
+    '''
+        Este método cria um objeto .json contendo todas as organizações presentes no DADOS.GOV.BR,
+        bem como seus URLS.
+    '''
+    def update_organization_dictionary(self):
+
+        print('Atualizando dicionário de organizações do DADOS.GOV.BR')
+
+        #Carregar configurações do WebBrowser
+        self.wb_start()
+
+        #Carregar a página inicial das organizações
+        url = 'https://dados.gov.br/organization?q=&sort=&page='
+        
+        try:
+            init = time.time()
+            self.browser.get(url + '1')
+            end = time.time()
+            #print('Página carregada com sucesso ({} s).'.format(end-init))
+        except:
+            print('Ocorreu um erro ao carregar a página para obter elementos de paginação, tente novamente por favor.')
+            self.browser.close()
+            sys.exit()
+
+        #Verificar paginação
+        pages = int(self.have_pagination())
+
+        #Variável que irá receber o dicionário
+        organizations = {}
+        
+        #Criar looping por todas as páginas
+        for page in range(1,pages+1):
+
+            #Carregar a página
+            try:
+                init = time.time()
+                completed_url = url + str(page)
+                self.browser.get(completed_url)
+                end = time.time()
+                print('Página [{}] carregada com sucesso ({} s).'.format(completed_url, end-init))
+            except:
+                print('Ocorreu um erro ao carregar a página, tente novamente por favor.')
+                self.browser.close()
+                sys.exit()
+
+            #Coletar as informações SIGLA, NOME e URL
+            cards = self.browser.find_elements_by_css_selector('li.media-item a')
+
+            for card in cards:
+                org_name = card.get_attribute('title')
+                org_initials = org_name.split(' ')[-1]
+                org_url = card.get_attribute('href')
+
+                organizations[org_initials] = {
+                    'name': org_name,
+                    'url': org_url
+                }
+
+        with open('org_dictionary.json', 'wb') as f:
+            f.write(json.dumps(organizations))
+            f.close()
+
+        print('Atualização realizada com êxito.')
