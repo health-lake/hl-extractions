@@ -32,8 +32,6 @@ class DGBRXtractor:
         Este método foi desenvolvido para realizar o download de todos os arquivos do conjunto de dados a partir da sua url.
           url -> variável do tipo string | Contém a url da página do dataset que possui os arquivos a serem baixados.
           ext -> variável do tipo lista | Lista de strings com as extensões dos arquivos que deseja-se baixar. Por exemplo: ['.csv', '.xlsx', '.pdf']. O valor padrão é somente ['.csv'].
-
-        Um exemplo de uso será adicionado na pasta "exemplos"
     '''
     def get_files_by_ds_url(self, url, ext=['.csv']):
 
@@ -174,3 +172,43 @@ class DGBRXtractor:
             f.close()
 
         print('Atualização realizada com êxito.')
+
+    '''
+        Este método tem como finalidade recolher todos os links de datasets de uma organização,
+        por meio do link da página desta organização no DADOS.GOV.BR.
+          org_url -> variável do tipo string | URL da página da organização no DADOS.GOV.BR
+    '''
+    def get_ds_urls_by_organization_url(self, org_url):
+        
+        print('Carregando URLs dos conjuntos de dados...')
+
+        #Carregar as configurações do WebBrowser
+        self.wb_start()
+
+        #Carregar a página
+        self.browser.get(org_url)
+
+        #Verificar paginação
+        pages = int(self.have_pagination())
+
+        #Variável que irá armazenar os links
+        datasets = []
+
+        for page in range(1, pages+1):
+
+            #Carregar a página
+            url = org_url + '?page=' + str(page)
+            #print('carregando... ' + url)
+            self.browser.get(url)
+
+            #Obter os URLs do dataset
+            ds_url_list = self.browser.find_elements_by_css_selector('h3.dataset-heading a')
+            #print(ds_url_list)
+
+            #Adicionando os links na lista
+            for url in ds_url_list:
+                datasets.append(url.get_attribute('href'))
+
+        print('Datasets carregados com sucesso.')
+
+        return datasets
