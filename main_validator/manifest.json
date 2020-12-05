@@ -4,7 +4,7 @@
         "metadata": {},
         "name": "id",
         "nullable": true,
-        "type": "string"
+        "type": "integer"
       },
       {
         "metadata": {},
@@ -16,13 +16,13 @@
         "metadata": {},
         "name": "idade",
         "nullable": true,
-        "type": "string"
+        "type": "integer"
       },
       {
         "metadata": {},
         "name": "altura",
-        "nullable": false,
-        "type": "string"
+        "nullable": true,
+        "type": "double"
       }
     ],
     "type": "struct"
