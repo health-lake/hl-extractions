@@ -11,8 +11,8 @@ estados = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA'
 
 rc = RegistroCivil()
 
-data_inicial = date(2020, 11, 1)
-data_final = date(2020, 12, 7)
+data_inicial = date(2015, 1, 1)
+data_final = date(2020, 12, 8)
 
 delta = data_final - data_inicial
 
