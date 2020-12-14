@@ -18,7 +18,10 @@ class ValidateOperator:
     """
 
     def __init__(self, dataset_file, manifest_file, delimiter, mode, format_output):
-        self.spark = SparkSession.builder.master("local[2]").getOrCreate()
+        self.spark = SparkSession.builder.master("local[2]").\
+            config("mapreduce.fileoutputcommitter.marksuccessfuljobs", "false")\
+                .config("parquet.enable.summary-metadata", "false")\
+                    .getOrCreate()
         self.schema = self._retrieve_schema(manifest_file)
         self.dataset_file = dataset_file
         self.delimiter = delimiter
@@ -36,7 +39,12 @@ class ValidateOperator:
     def generate_file(self):
         print("HANDLING DATASET WITH SCHEMA")
         try:
-            dataset = self.spark.read.option("header", "true").option("mode", f"{self.mode}").option("delimiter", f"{self.delimiter}").format("csv").schema(self.schema).load(self.dataset_file)
+            dataset = self.spark.read.option("header", "true")\
+                .option("mode", f"{self.mode}")\
+                    .option("delimiter", f"{self.delimiter}")\
+                        .format("csv")\
+                            .schema(self.schema)\
+                                .load(self.dataset_file)
         except:
             print(sys.exc_info()[0])
 
@@ -48,7 +56,7 @@ class ValidateOperator:
 
         print(f"WRITING FILE IN {self.format_output.upper()} FORMAT")
         try:
-            dataset.write.format(self.format_output).save(f"day={str(date.today())}")
+            dataset.write.option("header", "true").format(self.format_output).save(f"day={str(date.today())}")
         except:
             print(sys.exc_info()[0])
 
