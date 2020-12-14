@@ -10,11 +10,20 @@ class ValidateOperator:
             according to its manifest.
         
         -> PARAMS:
-            - dataset: path to the dataset file
-            - manifest: path to the manifest file
+            - dataset_file: path to the dataset file
+            - manifest_file: path to the manifest file
+            - delimiter: by default columns are delimited using ',' but delimiter can be set to any character
+            - mode: determines the parsing mode. By default it is PERMISSIVE. Possible values are:
+                -> PERMISSIVE: tries to parse all lines: nulls are inserted for missing tokens and extra tokens are ignored.
+                -> DROPMALFORMED: drops lines which have fewer or more tokens than expected or tokens which do not match the schema
+                -> FAILFAST: aborts with a RuntimeException if encounters any malformed line
+
+                check out more on: https://github.com/databricks/spark-csv
+            - format_output: output format file. It can be either CSV, PARQUET or JSON
         
         -> METHODS:
-            - check_validations: checa as validações dos dados internos
+            - generate_file: creates a curated amount of files related to the file and matching schema
+            - _retrieve_schema: internal method to get the manifest schema
     """
 
     def __init__(self, dataset_file, manifest_file, delimiter, mode, format_output):
@@ -75,15 +84,3 @@ def HandlerValidateOperator(dataset_file='./main_validator/example.csv', manifes
     ValidateOperator(dataset_file, manifest_file, delimiter, _mode_extract, _output_format).generate_file()
 
 HandlerValidateOperator(mode='DROPMALFORMED', format_output='csv')
-
-
-"""
-delimiter: by default columns are delimited using ,, but delimiter can be set to any character
-
-mode: determines the parsing mode. By default it is PERMISSIVE. Possible values are:
- -> PERMISSIVE: tries to parse all lines: nulls are inserted for missing tokens and extra tokens are ignored.
- -> DROPMALFORMED: drops lines which have fewer or more tokens than expected or tokens which do not match the schema
- -> FAILFAST: aborts with a RuntimeException if encounters any malformed line
-
-check out more on: https://github.com/databricks/spark-csv
-"""
