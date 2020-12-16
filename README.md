@@ -3,7 +3,6 @@
 ## ValidateOperator
     Performs validations under a dataset according to its manifest.
         
-
 ### PARAMETERS:
 * dataset_file: path to the dataset file
 * manifest_file: path to the manifest file
