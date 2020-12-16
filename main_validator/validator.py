@@ -69,7 +69,7 @@ class ValidateOperator:
         except:
             print(sys.exc_info()[0])
 
-def HandlerValidateOperator(dataset_file='./main_validator/example.csv', manifest_file='./main_validator/manifest.json', delimiter=',', mode='PERMISSIVE', format_output='csv'):
+def HandlerValidateOperator(dataset_file=' ', manifest_file=' ', delimiter=',', mode='PERMISSIVE', format_output='csv'):
     print("============================ STARTING CONSOLIDATION PROCCESS ============================")
     print(f"DATASET PATH FILE: {dataset_file}")
     print(f"MANIFEST PATH FILE: {manifest_file}")
@@ -82,5 +82,3 @@ def HandlerValidateOperator(dataset_file='./main_validator/example.csv', manifes
     print(f"OUTPUT FORMAT: {_output_format}")
     
     ValidateOperator(dataset_file, manifest_file, delimiter, _mode_extract, _output_format).generate_file()
-
-HandlerValidateOperator(mode='DROPMALFORMED', format_output='csv')
