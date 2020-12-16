@@ -1,6 +1,18 @@
 # HEALTHLAKE EXTRACTIONS
 
-## DGBRXtractor
-Eu estou criando esta biblioteca para obter de forma simples arquivos dos mais variados conjuntos de dados provenientes do http://dados.gov.br
+## ValidateOperator
+    Performs validations under a dataset according to its manifest.
+        
+### PARAMETERS:
+* dataset_file: path to the dataset file
+* manifest_file: path to the manifest file
+* delimiter: by default columns are delimited using ',' but delimiter can be set to any character
+* mode: determines the parsing mode. By default it is PERMISSIVE. Possible values are:
+  1. **PERMISSIVE:** _(default)_ tries to parse all lines: nulls are inserted for missing tokens and extra tokens are ignored.
+  2. **DROPMALFORMED:** drops lines which have fewer or more tokens than expected or tokens which do not match the schema
+  3. **FAILFAST:** aborts with a RuntimeException if encounters any malformed line
+               
+      ```check out more on: https://github.com/databricks/spark-csv```
 
-Qualquer problema, pode me mandar um e-mail (qualvalordex@gmail.com) ou me escrever no WhatsApp do time.
+* format_output: output format file. It can be either **CSV** _(default)_, **PARQUET** or **JSON**
+  
