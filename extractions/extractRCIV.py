@@ -41,6 +41,3 @@ class ExtractRCIV:
             f.close()
 
         print('Done.')
-
-RCIV = ExtractRCIV(date(2015, 1, 1), date(2020, 12, 31))
-RCIV.download()
