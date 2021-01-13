@@ -26,7 +26,7 @@ class DGBRXtractor:
         self.chrome_options = Options()
         self.chrome_options.add_argument('--headless')
         self.chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        self.browser = webdriver.Chrome(executable_path='./chromedriver_linux.exe', options=self.chrome_options)
+        self.browser = webdriver.Chrome(executable_path='./tools/webdrivers/chromedriver_linux.exe', options=self.chrome_options)
 
     '''
         Este método foi desenvolvido para realizar o download de todos os arquivos do conjunto de dados a partir da sua url.
