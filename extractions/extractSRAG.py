@@ -11,6 +11,3 @@ class ExtractSRAG:
     def download(self):
         xtr = DGBRXtractor()
         xtr.get_files_by_ds_url(self.target_url, ext=self.extensions)
-
-base_srag = ExtractSRAG()
-base_srag.download()
