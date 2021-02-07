@@ -6,7 +6,7 @@ from datetime import datetime
     Class S3WriterOperator: writes an extracted file on a S3 bucket.
 
     -> PARAMS:
-        - extraction_file: file extracted on your script
+        - extraction_file: path of the file extracted on your script
         - extraction_name: name of the file extracted who will be written
         - extraction_source: name of the source related to your extraction
         - bucket_name: name of the bucket to write on.
