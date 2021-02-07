@@ -1,4 +1,4 @@
-import utils
+from utils import s3_writer
 
 extracted_file="test_file.txt"
 extraction_name="test_file.txt"
