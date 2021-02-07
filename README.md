@@ -1,6 +1,6 @@
 # HEALTHLAKE EXTRACTIONS
 
-## OPERATOR
+## OPERATORS
 
 ### S3 Writer Operator
     Writes an extracted file on a S3 bucket.
@@ -11,6 +11,8 @@
 * extraction_source: name of the source related to your extraction
 * bucket_name: name of the bucket to write on.
     **Default:** "s3://health-lake-input"
+
+-----
 
 ### Validation Operator
     Performs validations under a dataset according to its manifest.
