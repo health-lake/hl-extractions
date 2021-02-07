@@ -1,4 +1,4 @@
-from utils.s3_writer import HandlerS3Writer
+from utils.s3_writer_operator import HandlerS3Writer
 
 extracted_file="test_file.txt"
 extraction_name="test_file.txt"
