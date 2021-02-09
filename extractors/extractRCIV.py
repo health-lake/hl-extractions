@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from tools.RegistroCivil import RegistroCivil
+from RegistroCivil import RegistroCivil
 from datetime import date, timedelta, datetime
+from utils.s3_writer_operator import HandlerS3Writer
 
 class ExtractRCIV:
 
@@ -36,8 +37,14 @@ class ExtractRCIV:
                         deaths = str(item['total'])
                         data += '\n' + extraction_date + ',' + register_date + ',' + uf + ',' + city + ',' + deaths
 
-        with open('obitos-geral.csv', 'w') as f:
-            f.write(data)
-            f.close()
+        s3_writer = HandlerS3Writer(
+            extracted_file = data,
+            extraction_name = 'obitos_geral.csv',
+            extraction_source = 'ObitosRegistroCivil'
+        )
+
+        # with open('obitos-geral.csv', 'w') as f:
+        #     f.write(data)
+        #     f.close()
 
         print('Done.')

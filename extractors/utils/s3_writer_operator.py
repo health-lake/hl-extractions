@@ -50,7 +50,7 @@ class S3WriterOperator:
         except:
             print(f"ERROR: {sys.exc_info()}")
 
-def HandlerS3Writer(extracted_file, extraction_name, extraction_source, bucket):
+def HandlerS3Writer(extracted_file, extraction_name, extraction_source, bucket='health-lake-input'):
     print("============================ STARTING WRITING PROCCESS ============================")
     _bucket_name = bucket or 'health-lake-input'
     print(f"BUCKET NAME: {_bucket_name}")

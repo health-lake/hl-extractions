@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from tools.DGBRXtractor import DGBRXtractor
+from DGBRXtractor import DGBRXtractor
 
 class ExtractSRAG:
 
@@ -9,5 +9,5 @@ class ExtractSRAG:
         self.extensions = ['.csv']
     
     def download(self):
-        xtr = DGBRXtractor()
+        xtr = DGBRXtractor('SRAG')
         xtr.get_files_by_ds_url(self.target_url, ext=self.extensions)

@@ -13,9 +13,12 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 
+from utils.s3_writer_operator import HandlerS3Writer
+
 class DGBRXtractor:
     
-    def __init__(self):
+    def __init__(self, datasource):
+        self.datasource = datasource
         pass
         
     def wb_start(self):    
@@ -90,9 +93,16 @@ class DGBRXtractor:
                 file_path = dataset_id + '/' + file_name
 
                 # Gravar o arquivo
-                with open(file_path, mode='wb') as f:
-                    f.write(req.content)
-                    f.close()
+                # with open(file_path, mode='wb') as f:
+                #     f.write(req.content)
+                #     f.close()
+
+                # Grava no S3
+                s3_writer = HandlerS3Writer(
+                    extracted_file = req.content,
+                    extraction_name = file_name,
+                    extraction_source = self.datasource
+                )
 
         # Fechar o browser
         self.browser.close()
