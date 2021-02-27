@@ -13,3 +13,21 @@ You need to create a credentials.json file with your Twitter API tokens in the s
     "secret_access_token":"your_secret_access_token_here"
 }
 ```
+
+Because of the S3 Writer operator, you also need to configure your AWS credentials at `awscli`.
+
+After configured, you only need to type few code lines to take your csv directly into S3:
+```python
+from Tweext import Tweext
+
+# Initializing the class
+tweext = Tweext()
+
+# Authenticating...
+tweext.authenticate()
+
+# Downloading tweets related to the specific keyword
+tweext.start_extraction(keyword = 'vacina')
+```
+
+That's all!
