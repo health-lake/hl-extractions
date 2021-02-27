@@ -4,6 +4,8 @@ import json
 import tweepy
 import re
 
+from utils.s3_writer_operator import HandlerS3Writer
+
 class Tweext:
 
     def __init__(self):
@@ -80,6 +82,14 @@ class Tweext:
             line = '\n' + tweet_data + ',' + tweet_text + ',' + tweet_favs + ',' + tweet_author + ',' + tweet_author_verified
             buffer += line
         
+        s3 = HandlerS3Writer(
+            extracted_file = buffer,
+            extraction_name = 'tweets.csv',
+            extraction_source = 'Twitter'
+        )
+        
         # Write the file
-        with open('tweets.csv', 'w') as f:
-            f.write(buffer)
+        # with open('tweets.csv', 'w') as f:
+        #     f.write(buffer)
+
+        print('Process done.')
