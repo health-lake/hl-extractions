@@ -4,7 +4,7 @@ Tweext is a tool to extract tweets by a keyword.
 
 ## How to use
 
-You need to create a credentials.json file with your Twitter API tokens in the same path of the script:
+Create credentials.json into the project folder:
 ```json
 {
     "consumer_key":"your_consumer_key_here",
@@ -14,20 +14,19 @@ You need to create a credentials.json file with your Twitter API tokens in the s
 }
 ```
 
-Because of the S3 Writer operator, you also need to configure your AWS credentials at `awscli`.
-
-After configured, you only need to type few code lines to take your csv directly into S3:
-```python
-from Tweext import Tweext
-
-# Initializing the class
-tweext = Tweext()
-
-# Authenticating...
-tweext.authenticate()
-
-# Downloading tweets related to the specific keyword
-tweext.start_extraction(keyword = 'vacina')
+Build your docker image:
+```
+docker build -t image_name .
 ```
 
-That's all!
+Create a tag:
+```
+docker tag image_name:latest 123456789012.dkr.ecr.us-east-1.amazonaws.com/image_name:latest
+```
+
+Push to ECR:
+```
+docker push 123456789012.dkr.ecr.us-east-1.amazonaws.com/image_name:latest
+```
+
+After that you need to create your AWS Lambda function based on docker image, setting up the environment variables: KEYWORD and LIMIT.
