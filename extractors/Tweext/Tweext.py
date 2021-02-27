@@ -53,7 +53,7 @@ class Tweext:
         print('ID: ' + my_id + ' | Name: ' + my_name + ' | Screen Name: @' + my_screen_name)
         print('Ready for get data...')
 
-    def start_extraction(self, keyword, limit=10):
+    def start_extraction(self, keyword, limit=1000):
         # Using Cursor + Search to get tweets | excluding replies and retweets
         print('Looking for recent tweets containing "' + keyword + '"')
         tweets = tweepy.Cursor(
@@ -85,11 +85,7 @@ class Tweext:
         HandlerS3Writer(
             extracted_file = buffer,
             extraction_name = 'tweets.csv',
-            extraction_source = 'Twitter'
+            extraction_source = 'twitter'
         )
-        
-        # Write the file
-        # with open('tweets.csv', 'w') as f:
-        #     f.write(buffer)
 
         print('Process done.')
