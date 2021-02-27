@@ -82,7 +82,7 @@ class Tweext:
             line = '\n' + tweet_data + ',' + tweet_text + ',' + tweet_favs + ',' + tweet_author + ',' + tweet_author_verified
             buffer += line
         
-        s3 = HandlerS3Writer(
+        HandlerS3Writer(
             extracted_file = buffer,
             extraction_name = 'tweets.csv',
             extraction_source = 'Twitter'
