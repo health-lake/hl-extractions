@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from Tweext import Tweext
 import time
+import os
+from Tweext import Tweext
 
 # Function to be called on AWS Lambda
 def handler(event, context):
@@ -14,10 +15,12 @@ def handler(event, context):
     # Authenticating...
     tweext.authenticate()
 
-    # Download the least 100 tweets about 'vacina'
+    # Download the last LIMIT tweets about KEYWORD | Note that KEYWORD and LIMIT are environment variables declared at AWS Lambda
+    keyword = os.environ['KEYWORD']
+    limit = int(os.environ['LIMIT'])
     tweext.start_extraction(
-        keyword = 'vacina',
-        limit = 100
+        keyword = keyword,
+        limit = limit
     )
 
     # Stop time counting
