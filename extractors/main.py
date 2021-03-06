@@ -1,6 +1,6 @@
-from extractCNAC import ExtractCNAC
-from extractRCIV import ExtractRCIV
-from extractSRAG import ExtractSRAG
+from extr_cnac import ExtractCNAC
+from extr_rciv import ExtractRCIV
+from extr_srag import ExtractSRAG
 
 def main():
     cnac = ExtractCNAC()
