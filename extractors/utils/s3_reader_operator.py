@@ -52,14 +52,14 @@ class S3ReaderOperator:
 
         for key_file in list(filter(self._check_format, files)):
             file_path = f"s3://{self.bucket_name}/{key_file}"
-            print(f"body: {file_path}")
+            print(f"File path: {file_path}")
             csv_file = pd.read_csv(file_path)
             frames.append(csv_file)
         
         data = pd.concat(frames)
         return data
 
-def HandlerS3Reader(extraction_path, input_format, bucket):
+def HandlerS3Reader(extraction_path, input_format='csv', bucket='health-lake-input'):
     print("============================ STARTING READING PROCCESS ============================")
     _bucket_name = bucket or 'health-lake-input'
     _input_format = input_format or 'csv'
