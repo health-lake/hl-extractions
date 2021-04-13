@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from DGBRXtractor import DGBRXtractor
+from extr_dgbr import DGBRXtractor
 
 class ExtractSRAG:
 
