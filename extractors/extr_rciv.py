@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from RegistroCivil import RegistroCivil
+from extr_registro_civil import RegistroCivil
 from datetime import date, timedelta, datetime
 from utils.s3_writer_operator import HandlerS3Writer
 
