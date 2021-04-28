@@ -15,7 +15,10 @@ from utils.s3_writer_operator import HandlerS3Writer
 
 
 class DGBRXtractor:
-    def __init__(self, datasource):
+    def __init__(
+        self,
+        datasource,
+    ):
         self.datasource = datasource
         pass
 
@@ -29,9 +32,17 @@ class DGBRXtractor:
         self.chrome_options.add_experimental_option(
             "excludeSwitches", ["enable-logging"]
         )
-        # todo: parameterize the driver location to be set in the class ctor
+
+        # TODO This should not be here. Think of a way to better implement this variable
+        if sys.platform == "linux" or sys.platform == "linux2":
+            path_to_driver = "./drivers/chromedriver_linux89"
+        if sys.platform == "darwin":
+            path_to_driver = "./drivers/chromedriver_mac"
+        if sys.platform == "win32":
+            path_to_driver = "./drivers/chromedriver_windows.exe"
+
         self.browser = webdriver.Chrome(
-            executable_path="./drivers/chromedriver_linux_89",
+            executable_path=path_to_driver,
             options=self.chrome_options,
         )
 
