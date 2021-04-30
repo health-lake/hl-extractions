@@ -108,21 +108,24 @@ class DGBRXtractor:
                     "a.resource-url-analytics"
                 ).get_attribute("href")
 
+                print(file_url)
+
                 # Verificar se já existe uma pasta no diretório de execução com a identificação do dataset que pegamos lá em cima, caso não exista ela será criada
                 if not os.path.exists(dataset_id):
                     os.makedirs(dataset_id)
 
                 # Baixar o arquivo utilizando a biblioteca requests
+                downloadable_url = file_url.split("=")[1]
                 print("Downloading {}".format(file_name))
-                req = requests.get(file_url)
+                req = requests.get(downloadable_url)
 
                 # Definir o local e o nome que o arquivo será salvo
                 file_path = dataset_id + "/" + file_name
 
-                # Gravar o arquivo
-                # with open(file_path, mode='wb') as f:
-                #     f.write(req.content)
-                #     f.close()
+                # Gravar o arquivo local
+                # with open(file_path, mode="wb") as f:
+                #   f.write(req.content)
+                #   f.close()
 
                 # Grava no S3
                 s3_writer = HandlerS3Writer(
