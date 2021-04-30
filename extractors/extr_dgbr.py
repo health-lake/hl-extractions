@@ -87,8 +87,6 @@ class DGBRXtractor:
             if file_format.startswith(".zip"):
                 file_format = ".zip"
 
-            print(file_format)
-
             # Verificar se o formato de arquivo raspado está presente na lista de extensões que desejamos baixar
             if file_format in ext:
                 # Gerar um nome para o arquivo a ser salvo. Aqui foi utilizado o atributo "title" das tags <a> que contém o link para o detalhamento do dataset, que possuem classe "heading"
@@ -118,10 +116,8 @@ class DGBRXtractor:
 
                 # Baixar o arquivo utilizando a biblioteca requests
                 downloadable_url = file_url.split("=")[1]
-                print("DOWNLOADABLA URL: " + downloadable_url)
                 print("Downloading {}".format(file_name))
                 req = requests.get(downloadable_url)
-                print(req.raw)
 
                 # Definir o local e o nome que o arquivo será salvo
                 file_path = dataset_id + "/" + file_name
