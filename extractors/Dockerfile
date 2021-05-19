@@ -8,6 +8,12 @@ COPY requirements.txt .
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY
 
+# Copia o arquivo entrypoint do repositorio para dentro do Docker
+COPY entrypoint.sh /entrypoint.sh
+
+# Executa o "starts up"
+ENTRYPOINT ["/entrypoint.sh"]
+
 # Inicia como root, upadate, intala pip3 a intala os requirements
 USER root
 RUN apt-get update
