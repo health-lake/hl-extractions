@@ -22,4 +22,9 @@ def main(source):
 
 
 if __name__ == "__main__":
+    assert sys.argv[1].upper() in [
+        "CNAC",
+        "RCIV",
+        "SRAG",
+    ], "Invalid argument. Please make sure your source argument is either CNAC, RCIV or SRAG."
     main(sys.argv[1].upper())
