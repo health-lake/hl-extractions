@@ -1,4 +1,4 @@
-from extr_registro_civil import RegistroCivil
+from modules.extr_registro_civil import RegistroCivil
 from datetime import date, timedelta, datetime
 from utils.s3_writer_operator import HandlerS3Writer
 

@@ -1,10 +1,20 @@
-import json
 import os
-import importlib.util
 import sys
+import json
+import importlib.util
+from typing import Union
 
 
-def main(source_path: str, source_args: list, source_class: str) -> None:
+def main(source_path: str, source_args: Union[list, str], source_class: str) -> None:
+    """
+    Dynamically imports the specified module and executes the module's `.download()` method.
+
+        Parameters:
+            source_path (str): Relative path to the module;
+            source_args (list, str): List/string containing the arguments to that specific module (if any);
+            source_class (str): Class name referring the class that will be executing the `.download()` method.
+    """
+
     source_name: str = source_path.split("/")[-1].replace(".py", "")
     spec: _frozen_importlib.ModuleSpec = importlib.util.spec_from_file_location(
         source_name, source_path

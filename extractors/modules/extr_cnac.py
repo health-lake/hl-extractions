@@ -1,4 +1,4 @@
-from extr_dgbr import DGBRXtractor
+from modules.extr_dgbr import DGBRXtractor
 
 
 class ExtractCNAC:
