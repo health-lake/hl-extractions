@@ -1,0 +1,14 @@
+{
+  "CNAC": {
+    "source_path": "./extr_cnac.py",
+    "source_args": ""
+  },
+  "RCIV": {
+    "source_path": "./extr_rciv.py",
+    "source_args": ["2021-01-01 00:00:00", "2021-02-28 00:00:00"]
+  },
+  "SRAG": {
+    "source_path": "./extr_srag.py",
+    "source_args": ""
+  }
+}
