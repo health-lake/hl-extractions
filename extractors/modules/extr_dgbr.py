@@ -20,7 +20,6 @@ class DGBRXtractor:
         datasource,
     ):
         self.datasource = datasource
-        pass
 
     def wb_start(self):
         # Ignorar avisos
@@ -58,6 +57,7 @@ class DGBRXtractor:
         self.wb_start()
 
         # Carregamento da página do dataset
+        print(f"Downloading {self.datasource} data, please wait...")
         print("Carregando [{}]".format(url))
 
         try:
@@ -120,7 +120,7 @@ class DGBRXtractor:
                 req = requests.get(downloadable_url)
 
                 # Definir o local e o nome que o arquivo será salvo
-                file_path = dataset_id + "/" + file_name
+                # file_path = dataset_id + "/" + file_name
 
                 # Gravar o arquivo local
                 # with open(file_path, mode="wb") as f:
