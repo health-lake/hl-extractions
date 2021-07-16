@@ -1,10 +1,10 @@
-from extr_registro_civil import RegistroCivil
+from modules.extr_registro_civil import RegistroCivil
 from datetime import date, timedelta, datetime
 from utils.s3_writer_operator import HandlerS3Writer
 
 
 class ExtractRCIV:
-    def __init__(self, initial_date, final_dalte):
+    def __init__(self, initial_date, final_date):
         self.states = [
             "AC",
             "AL",
@@ -34,12 +34,12 @@ class ExtractRCIV:
             "SE",
             "TO",
         ]
-        self.initial_date = initial_date
-        self.final_date = final_dalte
-        self.delta = final_dalte - initial_date
+        self.initial_date = datetime.strptime(initial_date, "%Y-%m-%d %H:%M:%S")
+        self.final_date = datetime.strptime(final_date, "%Y-%m-%d %H:%M:%S")
+        self.delta = self.final_date - self.initial_date
 
     def download(self):
-        print("Downloading, please wait...")
+        print("Downloading RCIV data, please wait...")
 
         rcv = RegistroCivil()
 
@@ -78,7 +78,8 @@ class ExtractRCIV:
             extraction_source="ObitosRegistroCivil",
         )
 
-        # with open('obitos-geral.csv', 'w') as f:
+        # Escreve arquivo localmente para testes
+        # with open("obitos-geral.csv", "w") as f:
         #     f.write(data)
         #     f.close()
 
