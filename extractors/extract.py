@@ -29,11 +29,11 @@ def main(source_path: str, source_args: Union[list, str], source_class: str) -> 
 if __name__ == "__main__":
     config_file: str = "./config.json"
 
+    # Getting environmental variable from docker
     extraction = os.environ['EXTRACTOR']
+ 
     # If there is a CLI arg with the script invocation, the default config_file location is overwritten by it:
-    if len(sys.argv) > 1:
-        # CLI arg
-        extraction: str = sys.argv[1]
+    if extraction != "":
 
         with open(config_file) as f:
             config_file: dict = json.load(f)
@@ -43,8 +43,8 @@ if __name__ == "__main__":
         for (key, value) in config_file.items():
             if key == extraction.upper():
                 config[key] = value
-                print("Config File: ", config)
     else:
+        print(extraction)
         with open(config_file) as f:
             config: dict = json.load(f)
 

@@ -53,3 +53,8 @@ Running extractor docker to execute extractions on a single run for testing purp
 ```bash
 docker run hl-extractions
 ```
+
+To run just one script:
+```bash
+docker container run -e EXTRACTOR="SRAG" hl-extractions
+```
