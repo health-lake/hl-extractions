@@ -43,7 +43,7 @@ RUN echo
 ENV EXTRACTOR=""
 
 # Comando que será executado quando vc der o docker run 
-ENTRYPOINT ["python3", "-u", "extract.py"]
+CMD ["python3", "-u", "extract.py"]
 
 # Codigos Docker
 #   Constroi o container:
