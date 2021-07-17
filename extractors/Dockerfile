@@ -12,7 +12,7 @@ ARG AWS_SECRET_ACCESS_KEY
 COPY entrypoint.sh /entrypoint.sh
 
 # Executa o "starts up"
-ENTRYPOINT ["/entrypoint.sh"]
+#ENTRYPOINT ["/entrypoint.sh"]
 
 # Inicia como root, upadate, intala pip3 a intala os requirements
 USER root
@@ -29,7 +29,7 @@ RUN pip3 install html5lib lxml boto3
 COPY ./ .
 
 # Allow access to chromedriver (adding one that runs on Google Chrome v89)
-RUN chmod +x drivers/chromedriver_linux_89
+#RUN chmod +x drivers/chromedriver_linux_89
 RUN chmod +x bash/configureAwsFiles.sh
 
 # Gets passed AWS keys args into ~.aws/credentials folders
@@ -40,8 +40,10 @@ ENV DISPLAY=:99
 
 RUN echo
 
+ENV EXTRACTOR=""
+
 # Comando que será executado quando vc der o docker run 
-CMD ["python3", "-u", "main.py"]
+ENTRYPOINT ["python3", "-u", "extract.py"]
 
 # Codigos Docker
 #   Constroi o container:

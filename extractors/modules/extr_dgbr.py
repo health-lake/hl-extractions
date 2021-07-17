@@ -40,9 +40,12 @@ class DGBRXtractor:
         if sys.platform == "win32":
             path_to_driver = "./drivers/chromedriver_windows.exe"
 
+        # self.browser = webdriver.Chrome(
+        #     executable_path=path_to_driver,
+        #     options=self.chrome_options,
+        # )
         self.browser = webdriver.Chrome(
-            executable_path=path_to_driver,
-            options=self.chrome_options,
+            options=self.chrome_options
         )
 
     """
