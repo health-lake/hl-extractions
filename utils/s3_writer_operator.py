@@ -1,6 +1,7 @@
 import boto3
 import sys
 from datetime import datetime
+import os
 
 """
     Class S3WriterOperator: writes an extracted file on a S3 bucket.
@@ -23,16 +24,24 @@ class S3WriterOperator:
         self.extraction_name = extraction_name
         self.extraction_source = extraction_source
         self.bucket_name = bucket_name
-        self.sts_connection = boto3.client('sts')   
-        self.account_infos = self.sts_connection.assume_role(
-            RoleArn=self.role,
-            RoleSessionName="put_object_on_s3"
-        )
-        self.s3 = boto3.client(
-            's3',
-            aws_access_key_id=self.account_infos['Credentials']['AccessKeyId'],
-            aws_secret_access_key=self.account_infos['Credentials']['SecretAccessKey'],
-            aws_session_token=self.account_infos['Credentials']['SessionToken']
+        
+        # self.sts_connection = boto3.client('sts')   
+        # self.account_infos = self.sts_connection.assume_role(
+        #     RoleArn=self.role,
+        #     RoleSessionName="put_object_on_s3"
+        # )
+        # self.s3 = boto3.client(
+        #     's3',
+        #     aws_access_key_id=self.account_infos['Credentials']['AccessKeyId'],
+        #     aws_secret_access_key=self.account_infos['Credentials']['SecretAccessKey'],
+        #     aws_session_token=self.account_infos['Credentials']['SessionToken']
+        # )
+
+        self.s3 =boto3.resource(
+            service_name="s3",
+            region_name="us-east-1",
+            aws_access_key=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.environ("AWS_SECRET_ACCESS_KEY")
         )
 
     def write_on_bucket(self):
