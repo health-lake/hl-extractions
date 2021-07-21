@@ -36,12 +36,14 @@ class S3WriterOperator:
         #     aws_secret_access_key=self.account_infos['Credentials']['SecretAccessKey'],
         #     aws_session_token=self.account_infos['Credentials']['SessionToken']
         # )
+        AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+        AWS_SECRET_ACCESS_KEY = os.environ("AWS_SECRET_ACCESS_KEY")
 
         self.s3 =boto3.resource(
             service_name="s3",
             region_name="us-east-1",
-            aws_access_key=os.environ.get("AWS_ACCESS_KEY_ID"),
-            aws_secret_access_key=os.environ("AWS_SECRET_ACCESS_KEY")
+            aws_access_key=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY
         )
 
     def write_on_bucket(self):
