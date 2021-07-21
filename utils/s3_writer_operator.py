@@ -37,7 +37,7 @@ class S3WriterOperator:
         #     aws_session_token=self.account_infos['Credentials']['SessionToken']
         # )
         AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
-        AWS_SECRET_ACCESS_KEY = os.environ("AWS_SECRET_ACCESS_KEY")
+        AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
 
         self.s3 =boto3.resource(
             service_name="s3",
