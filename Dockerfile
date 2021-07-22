@@ -40,10 +40,6 @@ ENV DISPLAY=:99
 
 RUN echo
 
-ENV CLUSTER="arn:aws:ecs:us-east-1:429201177306:cluster/extractions"
-ENV SECURITY_GROUP="sg-0b49406bb2fe006b4"
-ENV SUBNETS="subnet-0e3f130b3eb6e0d8f"
-
 ENV EXTRACTOR=""
 
 # Comando que será executado quando vc der o docker run 
