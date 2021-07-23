@@ -30,7 +30,7 @@ if __name__ == "__main__":
     config_file: str = "./config.json"
 
     # Getting environmental variable from docker
-    extraction = os.environ['EXTRACTOR']
+    extraction = sys.argv[1]
  
     # If there is a CLI arg with the script invocation, the default config_file location is overwritten by it:
     if extraction != "":
