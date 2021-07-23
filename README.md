@@ -2,6 +2,16 @@
 
 ## OPERATORS
 
+### Chrome Driver
+    This class configures and returns a webdriver object from Selenium. You must use it when creating a new web scraping script.
+    
+    Example of implementation:
+    ```Python
+    from utils.chrome_driver import ChromeDriver
+    
+    webdriver = ChromeDriver.get_driver()
+    ```
+
 ### S3 Writer Operator
     Writes an extracted file on a S3 bucket.
 
@@ -52,9 +62,4 @@ Running extractor docker to execute extractions on a single run for testing purp
 
 ```bash
 docker run hl-extractions
-```
-
-To run just one script:
-```bash
-docker container run -e EXTRACTOR="SRAG" hl-extractions
 ```
