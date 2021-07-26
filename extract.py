@@ -33,7 +33,7 @@ if __name__ == "__main__":
     extraction = sys.argv[1]
  
     # If there is a CLI arg with the script invocation, the default config_file location is overwritten by it:
-    if extraction != "":
+    if extraction != None:
 
         with open(config_file) as f:
             config_file: dict = json.load(f)

@@ -1,16 +1,34 @@
 # HEALTHLAKE EXTRACTIONS
+## CONTRIBUTING FLOW    
+To add another extraction script the developer must create it under the `modules` folder. And if selenium is necessary to the extraction, the webdriver must be initialized with the ChromeDriver class, which is in the `utils` folder.
 
+After developing the new extraction script, the file `config.json` must be updated, adding a key with the extraction identifier, and the value must contain the script path and the args, if any. 
+
+To test the script, the developer can clone the repository and change the `CMD` in Dockerfile, passing the new script key. For example, if I create another extraction for vaccines data, the key should be something like `VACCINE` and to run the script, the `CMD` must be updated from:
+```bash
+CMD ["python3", "-u", "extract.py"]
+```
+to:
+```bash
+CMD ["python3", "-u", "extract.py", "VACCINE"]
+```
+Then follow the instructions below, in Docker topic, to build the container and run the extraction.
+With everything tested, the developer can proceed with the pull request. After the merge with the master, the CI will be activated and the new extraction script will be loaded to the ECR.
+
+After it, the developer must update the script fargate_dag.py, from the [dags repository](https://github.com/health-lake/hl-dags), with the new extraction.
+#
 ## OPERATORS
-
+#
 ### Chrome Driver
-    This class configures and returns a webdriver object from Selenium. You must use it when creating a new web scraping script.
+This class configures and returns a webdriver object from Selenium. You must use it when creating a new webscraping script.
     
-    Example of implementation:
-    ```Python
-    from utils.chrome_driver import ChromeDriver
-    
-    webdriver = ChromeDriver.get_driver()
-    ```
+Example of implementation:
+
+```python
+from utils.chrome_driver import ChromeDriver
+
+webdriver = ChromeDriver.get_driver()
+```
 
 ### S3 Writer Operator
     Writes an extracted file on a S3 bucket.
