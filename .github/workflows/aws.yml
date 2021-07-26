@@ -9,9 +9,9 @@
 
 on:
   push:
-    branches: [ ci_test ]
+    branches: [ master ]
   pull_request:
-    branches: [ ci_test ]
+    branches: [ master ]
 
 name: Healthlake extractions CI on ECR
 
