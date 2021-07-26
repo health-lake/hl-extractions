@@ -28,8 +28,6 @@ RUN pip3 install html5lib lxml boto3
 # Copia todos os arquivos que estão nesse diretorio para dentro da imagem
 COPY ./ .
 
-# Allow access to chromedriver (adding one that runs on Google Chrome v89)
-#RUN chmod +x drivers/chromedriver_linux_89
 RUN chmod +x bash/configureAwsFiles.sh
 
 # Gets passed AWS keys args into ~.aws/credentials folders
@@ -40,15 +38,5 @@ ENV DISPLAY=:99
 
 RUN echo
 
-ENV EXTRACTOR=""
-
 # Comando que será executado quando vc der o docker run 
 CMD ["python3", "-u", "extract.py"]
-
-# Codigos Docker
-#   Constroi o container:
-#       docker build -t nome_imagem .
-#   Roda o container
-#       docker run nome_imagem
-#   Entra dentro do terminal dentro do docker
-#       docker run -it nome_imagem /bin/bash
