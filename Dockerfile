@@ -5,9 +5,6 @@ WORKDIR /app
 # Copia arquivo requirements. Deve estar no mesmo path que o Dockerfile
 COPY requirements.txt .
 
-ARG AWS_ACCESS_KEY_ID
-ARG AWS_SECRET_ACCESS_KEY
-
 # Copia o arquivo entrypoint do repositorio para dentro do Docker
 COPY entrypoint.sh /entrypoint.sh
 
@@ -31,12 +28,9 @@ COPY ./ .
 RUN chmod +x bash/configureAwsFiles.sh
 
 # Gets passed AWS keys args into ~.aws/credentials folders
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
 RUN ./bash/configureAwsFiles.sh ${AWS_ACCESS_KEY_ID} ${AWS_SECRET_ACCESS_KEY}
-
-# Display port to avoid crash
-ENV DISPLAY=:99
-
-RUN echo
 
 # Comando que será executado quando vc der o docker run 
 CMD ["python3", "-u", "extract.py"]

@@ -27,7 +27,7 @@ def main(source_path: str, source_args: Union[list, str], source_class: str) -> 
 
 
 if __name__ == "__main__":
-    config_file: str = "./config.json"
+    config_file: str = "./config/config.json"
 
     # Getting environmental variable from docker
     extraction = sys.argv[1]
