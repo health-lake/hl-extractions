@@ -5,11 +5,14 @@ import boto3
 from botocore.exceptions import ClientError
 from datetime import date
 import datetime
+import os
 
-from utils.s3_writer_operator import HandlerS3Writer
+#from utils.s3_writer_operator import HandlerS3Writer
 
 # Instalar a engine fastparquet caso use parquet (pip install fastparquet)
 
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
 
 # Configurar aqui antes de rodar
 endereco_api = "https://imunizacao-es.saude.gov.br/_search"
@@ -20,8 +23,14 @@ generated_filename = "consolidado_vacinas_sus"
 class ExtractVACINA:
 
     def upload_to_aws(self, local_file, bucket, s3_file):
-        s3 = boto3.client('s3')
+        s3 = boto3.client(
+            service_name="s3",
+            region_name="us-east-1",
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+        )
         s3.upload_file(local_file, bucket, s3_file)
+        print(f"YOUR EXTRACTION PATH IS: s3://{bucket}/{s3_file}")
 
 
     ############### MAIN CODE ###############
@@ -111,14 +120,21 @@ class ExtractVACINA:
                 dados_vacina = json.loads(vacinas_raw)
             except Exception as ex:
                 print("Erro na requisicao/parsing dos dados da API em" + endereco_api + "com scroll id" + page_id + ". Erro: " + ex)
-            
+
             # Grava no S3
-            s3_writer = HandlerS3Writer(
-                extracted_file=f"/tmp/{generated_filename}_{str(current_page)}.json",
-                extraction_name=f"{generated_filename}_{str(current_page)}.json'",
-                extraction_source="vacina",
-                bucket='covid-lake-data'
+            self.upload_to_aws(
+                local_file=f"/tmp/{generated_filename}_{str(current_page)}.json",
+                bucket="covid-lake-data",
+                s3_file="raw/vacina/" + today.strftime("%Y/%m/%d/") + generated_filename + "_" + str(current_page) + ".json"
             )
+
+            # # Grava no S3
+            # s3_writer = HandlerS3Writer(
+            #     extracted_file=f"/tmp/{generated_filename}_{str(current_page)}.json",
+            #     extraction_name=f"{generated_filename}_{str(current_page)}.json'",
+            #     extraction_source="vacina",
+            #     bucket='covid-lake-data'
+            # )
 
             current_page += 1
             print("Requested page " +  str(current_page))
