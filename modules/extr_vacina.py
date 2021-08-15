@@ -32,11 +32,9 @@ class ExtractVACINA:
 
     def download(self):
         today = date.today()
-        day = datetime.timedelta(1)
+        day = datetime.timedelta(2)
         today = today - day
         vacina = f"{today.year}-{today.month:02d}-{today.day:02d}T00:00:00.000Z"
-        
-        #vacina = "2021-07-09T15:55:20.019Z"
 
         ## FULLLOAD
         ## Para gerar o fullload é necessário remover a chave query do dicionário.
@@ -47,7 +45,7 @@ class ExtractVACINA:
             "query": {
                 "bool": {
                 "filter": [
-                    { "term": { "vacina_dataAplicacao" : f"{today.year}-{today.month:02d}-{today.day}T00:00:00.000Z"}}
+                    { "term": { "vacina_dataAplicacao" : vacina}}
                 ]
                 }
             }
@@ -80,8 +78,11 @@ class ExtractVACINA:
                 raise Exception("Request timed out in the API server")
 
             # Pagina vazia, ou seja, acabaram os dados
+            if current_page == 1 and dados_vacina["hits"]["hits"] == None or len(dados_vacina["hits"]["hits"]) == 0:
+                raise Exception(f"Página vazia para a data {vacina}")
+
+            # Pagina vazia, ou seja, acabaram os dados
             if dados_vacina["hits"]["hits"] == None or len(dados_vacina["hits"]["hits"]) == 0:
-                print("Página vazia")
                 break
                 
             # Pega apenas a parte relevante dos dados para guardar
@@ -110,12 +111,6 @@ class ExtractVACINA:
                 dados_vacina = json.loads(vacinas_raw)
             except Exception as ex:
                 print("Erro na requisicao/parsing dos dados da API em" + endereco_api + "com scroll id" + page_id + ". Erro: " + ex)
-            
-
-            
-            #self.upload_to_aws(
-            #    '/tmp/' + generated_filename + '_' + str(current_page) + '.json','covid-lake-data',
-            #    'raw/vacina/' + today.strftime("%Y/%m/%d/") + generated_filename + '_' + str(current_page) + '.json')
             
             # Grava no S3
             s3_writer = HandlerS3Writer(
