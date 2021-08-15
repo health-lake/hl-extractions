@@ -50,7 +50,7 @@ class S3WriterOperator:
         _year = datetime.today().year
         _month = datetime.today().month
         _day = datetime.today().day
-        _extraction_path = f"raw/{self.extraction_source}/{_year}/{_month}/{_day}/{self.extraction_name}"
+        _extraction_path = f"raw/{self.extraction_source}/{_year}/{_month:02d}/{_day:02d}/{self.extraction_name}"
         print(f"YOUR EXTRACTION PATH IS: s3://{self.bucket_name}/{_extraction_path}")
         try:
             response = self.s3.put_object(
