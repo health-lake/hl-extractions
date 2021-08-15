@@ -78,7 +78,7 @@ class ExtractVACINA:
                 raise Exception("Request timed out in the API server")
 
             # Pagina vazia, ou seja, acabaram os dados
-            if current_page == 1 and dados_vacina["hits"]["hits"] == None or len(dados_vacina["hits"]["hits"]) == 0:
+            if current_page == 1 and (dados_vacina["hits"]["hits"] == None or len(dados_vacina["hits"]["hits"]) == 0):
                 raise Exception(f"Página vazia para a data {vacina}")
 
             # Pagina vazia, ou seja, acabaram os dados
