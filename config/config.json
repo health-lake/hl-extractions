@@ -10,5 +10,9 @@
   "SRAG": {
     "source_path": "./modules/extr_srag.py",
     "source_args": ""
+  },
+  "VACINA": {
+    "source_path": "./modules/extr_vacina.py",
+    "source_args": ""
   }
 }
