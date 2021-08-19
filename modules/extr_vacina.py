@@ -48,6 +48,17 @@ class ExtractVACINA:
         ## FULLLOAD
         ## Para gerar o fullload é necessário remover a chave query do dicionário.
         try:
+            # data= {
+            # "size": 10000
+            # ,
+            # "query": {
+            #     "bool": {
+            #     "filter": [
+            #         { "term": { "vacina_dataAplicacao" : vacina}}
+            #     ]
+            #     }
+            # }
+            # }
             data= {
             "size": 10000
             }
