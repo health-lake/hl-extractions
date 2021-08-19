@@ -50,14 +50,6 @@ class ExtractVACINA:
         try:
             data= {
             "size": 10000
-            ,
-            "query": {
-                "bool": {
-                "filter": [
-                    { "term": { "vacina_dataAplicacao" : vacina}}
-                ]
-                }
-            }
             }
             vacinas_raw = requests.get(
                 endereco_api + "?scroll=1m", 
