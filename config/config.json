@@ -14,5 +14,9 @@
   "VACINA": {
     "source_path": "./modules/extr_vacina.py",
     "source_args": ""
+  },
+  "UBS": {
+    "source_path": "./modules/extr_ubs.py",
+    "source_args": ""
   }
 }
