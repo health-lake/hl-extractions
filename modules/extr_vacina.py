@@ -41,26 +41,25 @@ class ExtractVACINA:
 
     def download(self):
         today = date.today()
-        day = datetime.timedelta(2)
+        day = datetime.timedelta(1)
         today = today - day
-        vacina = f"{today.year}-{today.month:02d}-{today.day:02d}T00:00:00.000Z"
+        #vacina = f"{today.year}-{today.month:02d}-{today.day:02d}T00:00:00.000Z"
+
+        #print(f"Data: {vacina}")
 
         ## FULLLOAD
         ## Para gerar o fullload é necessário remover a chave query do dicionário.
         try:
-            # data= {
-            # "size": 10000
-            # ,
-            # "query": {
-            #     "bool": {
-            #     "filter": [
-            #         { "term": { "vacina_dataAplicacao" : vacina}}
-            #     ]
-            #     }
-            # }
-            # }
             data= {
             "size": 10000
+            ,
+            "query": {
+                "bool": {
+                "filter": [
+                    { "term": { "vacina_dataAplicacao" : f"{today.year}-{today.month:02d}-{today.day}T00:00:00.000Z"}}
+                ]
+                }
+            }
             }
             vacinas_raw = requests.get(
                 endereco_api + "?scroll=1m", 
@@ -80,7 +79,6 @@ class ExtractVACINA:
         while True:
             # Se retornar erro
             if "error" in dados_vacina:
-                print("Erro nos dados da vacina")
                 print(dados_vacina["error"])
                 raise Exception("Error found on request result")
             
@@ -88,10 +86,6 @@ class ExtractVACINA:
             if dados_vacina["timed_out"] == True:
                 print("Request result returned timeout status")
                 raise Exception("Request timed out in the API server")
-
-            # Pagina vazia, ou seja, acabaram os dados
-            if current_page == 1 and (dados_vacina["hits"]["hits"] == None or len(dados_vacina["hits"]["hits"]) == 0):
-                raise Exception(f"Página vazia para a data {vacina}")
 
             # Pagina vazia, ou seja, acabaram os dados
             if dados_vacina["hits"]["hits"] == None or len(dados_vacina["hits"]["hits"]) == 0:
@@ -123,21 +117,12 @@ class ExtractVACINA:
                 dados_vacina = json.loads(vacinas_raw)
             except Exception as ex:
                 print("Erro na requisicao/parsing dos dados da API em" + endereco_api + "com scroll id" + page_id + ". Erro: " + ex)
+            
 
-            # Grava no S3
+            
             self.upload_to_aws(
-                local_file=f"/tmp/{generated_filename}_{str(current_page)}.json",
-                bucket="covid-lake-data",
-                s3_file="raw/vacina/" + today.strftime("%Y/%m/%d/") + generated_filename + "_" + str(current_page) + ".json"
-            )
-
-            # # Grava no S3
-            # s3_writer = HandlerS3Writer(
-            #     extracted_file=f"/tmp/{generated_filename}_{str(current_page)}.json",
-            #     extraction_name=f"{generated_filename}_{str(current_page)}.json'",
-            #     extraction_source="vacina",
-            #     bucket='covid-lake-data'
-            # )
+                '/tmp/' + generated_filename + '_' + str(current_page) + '.json','health-lake-input',
+                'raw/vacina/' + today.strftime("%Y/%m/%d/") + generated_filename + '_' + str(current_page) + '.json')
 
             current_page += 1
             print("Requested page " +  str(current_page))
