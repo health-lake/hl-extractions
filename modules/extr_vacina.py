@@ -121,7 +121,7 @@ class ExtractVACINA:
 
             
             self.upload_to_aws(
-                '/tmp/' + generated_filename + '_' + str(current_page) + '.json','covid-lake-data',
+                '/tmp/' + generated_filename + '_' + str(current_page) + '.json','health-lake-input',
                 'raw/vacina/' + today.strftime("%Y/%m/%d/") + generated_filename + '_' + str(current_page) + '.json')
 
             current_page += 1
