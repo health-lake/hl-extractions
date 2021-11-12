@@ -43,8 +43,9 @@ class ExtractVACINA:
         today = date.today()
         day = datetime.timedelta(1)
         today = today - day
+        print(f"Collected Day: {today}")
         #vacina = f"{today.year}-{today.month:02d}-{today.day:02d}T00:00:00.000Z"
-
+        #today = "2021-02-05T00:00:00.000Z"
         #print(f"Data: {vacina}")
 
         ## FULLLOAD
@@ -56,7 +57,8 @@ class ExtractVACINA:
             "query": {
                 "bool": {
                 "filter": [
-                    { "term": { "vacina_dataAplicacao" : f"{today.year}-{today.month:02d}-{today.day}T00:00:00.000Z"}}
+                    { "term": { "vacina_dataAplicacao" : f"{today.year}-{today.month:02d}-{today.day:02d}T00:00:00.000Z"}}
+                    #{ "term": { "vacina_dataAplicacao" : today}}
                 ]
                 }
             }
