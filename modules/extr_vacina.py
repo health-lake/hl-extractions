@@ -42,7 +42,7 @@ class ExtractVACINA:
     def download(self):
         today = date.today()
         day = datetime.timedelta(1)
-        today = today - 10 * day
+        today = today - day
         print(f"Collected Day: {today}")
         #vacina = f"{today.year}-{today.month:02d}-{today.day:02d}T00:00:00.000Z"
         #today = "2021-02-05T00:00:00.000Z"
