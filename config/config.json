@@ -15,10 +15,6 @@
     "source_path": "./modules/extr_vacina.py",
     "source_args": ""
   },  
-  "TUBER-FX-ETARIA": {
-    "source_path": "./modules/extr_tuber.py",
-    "source_args": ""
-  },
   "TUBERCULOSE": {
     "source_path": "./modules/extr_tuber_regiao.py",
     "source_args": ""
