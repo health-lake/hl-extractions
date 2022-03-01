@@ -34,4 +34,4 @@ RUN ./bash/configureAwsFiles.sh ${AWS_ACCESS_KEY_ID} ${AWS_SECRET_ACCESS_KEY}
 
 # Comando que será executado quando vc der o docker run
 
-CMD ["python3", "-u", "extract.py", "VACINA"]
+CMD ["python3", "-u", "extract.py", "MOBILIDADE"]

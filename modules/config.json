@@ -22,5 +22,9 @@
   "TUBERCULOSE": {
     "source_path": "./modules/extr_tuber_regiao.py",
     "source_args": ""
+  },
+  "MOBILITY": {
+    "source_path": "./modules/extr_mobility.py",
+    "source_args": ""
   }
 }
