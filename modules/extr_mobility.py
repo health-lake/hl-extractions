@@ -1,16 +1,9 @@
 from logging import exception
 import requests
-import boto3
 from datetime import date
-import os
-from utils.chrome_driver import ChromeDriver
 from utils.s3_writer_operator import HandlerS3Writer
 
-
-# Armazenando as keys.
-#AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
-#AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
-
+# CRIAÇÃO DE VARIÁVEIS
 FILE_NAME = 'global_mobility.csv'
 URL = 'https://www.gstatic.com/covid19/mobility/Global_Mobility_Report.csv'
 DATA_ATUAL = date.today()
@@ -26,7 +19,7 @@ class ExtractMOBILITY:
     def download(self):
 
         try:
-            # Request no arquivo alvo para download.
+            # REQUEST NO LINK DO ARQUIVO A SER BAIXADO
             print("Baixando: {}".format(FILE_NAME)) 
             r = requests.get(URL, stream=True, allow_redirects=True)
         except Exception as e:
@@ -34,11 +27,11 @@ class ExtractMOBILITY:
             print('Error: {e}')  
 
         try:
-            # Grava arquivo no bucket S3
+            # GRAVANDO NO BUCKET S3
             s3_writer = HandlerS3Writer(
                 extracted_file=r.content,
                 extraction_name=FILE_NAME,
-                extraction_source=f'mobility/{DATA_ATUAL}' 
+                extraction_source=f'mobility' 
             )
         except Exception as e:
             print('UPLOAD ERROR')
