@@ -12,10 +12,6 @@ class ExtractMOBILITY:
 
     print("Inicio da extração dos dados de mobilidade.")
 
-    # def __init__(self):
-    #     self.url="https://www.google.com/covid19/mobility/"
-    #     self.driver=ChromeDriver.get_driver(self.url)
-
     def download(self):
 
         try:
