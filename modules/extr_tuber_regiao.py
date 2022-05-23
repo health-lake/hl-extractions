@@ -22,15 +22,15 @@ class Extract_Tuber_regiao:
         self.url="https://datasus.saude.gov.br/acesso-a-informacao/casos-de-tuberculose-desde-2001-sinan/"
         #self.driver=webdriver.Chrome()
         self.driver=ChromeDriver.get_driver(self.url)
-       
-        
+
+
     def download(self):
-    
+
 
         estados=["AL","AC","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG",\
             "PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"]
         print(estados[0].lower)
-        
+
         for i in estados:
             self.driver.get(self.url)
             self.driver.implicitly_wait(2)
@@ -42,12 +42,12 @@ class Extract_Tuber_regiao:
             select_estados = Select(self.driver.find_element_by_id('mySelect'))
             #CLICA RADIO BUTTON
             self.driver.find_element_by_xpath("/html/body/div[1]/div/div/section[3]/div/div/div[2]/div/div/div/div/div/div[1]/input").click()
-            
-            
+
+
 
             #CLICA CAIXA DE SELECAO
             self.driver.find_element_by_xpath("//*[@id='mySelect']").click()            
-            
+
 
             #ESCOLHE ESTADO
             i=i.lower()
@@ -57,8 +57,8 @@ class Extract_Tuber_regiao:
                 f' http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sinannet/cnv/tuberc{i}.def')) \
              .key_up(Keys.CONTROL).perform()
             #self.driver.find_element_by_xpath(f"/html/body/div[1]/div/div/section[3]/div/div/div[2]/div/div/div/div/div/select/option[{i}}]").click()
-            
-            
+
+
             loop=-1
             #SELECIONA OS ANOS DE INTERESSE
             for o in (["{:02d}".format(n) for n in reversed(range(1,21))]):
@@ -66,13 +66,13 @@ class Extract_Tuber_regiao:
 
                 print(f'Estado {str(i.upper)} e ano de 20{str(o)}')
                 print("Seleciona regiao do estado como linha da tabela")
-                
-                
+
+
                 #Seleciona linha como 'REGIAO do ESTADO'
                 self.driver.find_element_by_xpath('/html/body/div/div/center/div/form/div[2]/div/div[1]/select/option[8]').click()
                 #/html/body/div/div/center/div/form/div[2]/div/div[1]/select/option[8]
                 print("Seleciona faixa etaria como coluna da tabela")
-                
+
 
                 #Seleciona coluna 'Faixa etaria'
                 self.driver.find_element_by_xpath('/html/body/div/div/center/div/form/div[2]/div/div[2]/select/option[19]').click()
@@ -80,20 +80,20 @@ class Extract_Tuber_regiao:
                 #raca                               /html/body/div/div/center/div/form/div[2]/div/div[2]/select/option[23]
                 #linha região 
                 #print("Seleciona ano")
-                
+
 
                 #SELECIONA ANOS
                 select_tipo = Select(self.driver.find_element_by_name('Arquivos'))
                 if loop>0:select_tipo.deselect_by_value(f'tube{i}20.dbf')
                 select_tipo.select_by_value(f'tube{i}{o}.dbf')
-              
+
                 #Botao mostrar
                 self.driver.find_element_by_xpath('/html/body/div/div/center/div/form/div[4]/div[2]/div[2]/input[1]').click()
                 print("Sobe tabela pro S3")
-               
+
                 #self.driver.find_element_by_xpath('/html/body/div/div/div[3]/table[1]/tbody/tr/td[1]/a').click()
                 time.sleep(1)
-                
+
                 file_name=f'regiao_fx_etaria_20{o}_{i.upper()}.csv'
 
                 #GRAVAR NO S3
@@ -103,7 +103,7 @@ class Extract_Tuber_regiao:
                     url = elem.get_attribute("href")
                     print(url)
 
-                    
+
                     # Verificar se já existe uma pasta no diretório de execução com a identificação do dataset que pegamos lá em cima, caso não exista ela será criada
                     dataset_id = url.split("/")[-1]
                     if not os.path.exists(dataset_id):
@@ -130,15 +130,15 @@ class Extract_Tuber_regiao:
                     except Exception as e:
                         print('Erro ao transferir arquivo para s3')
                         print('O erro é {e}')
-                    
+
                 #CLICA NO BOTAO VOLTAR
                 self.driver.find_element_by_xpath('/html/body/div/div/div[3]/table[2]/tbody/tr/td/a').click()
-                    
-          
+
+
         self.driver.close()
 #if __name__=="__main__":
 try:
     Extract_Tuber_regiao().download()
 except exception as e:
     print(e)
-#Extract_Tuberculose()
+#Extract_Tuberculose() 
