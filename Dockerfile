@@ -22,6 +22,10 @@ RUN pip3 install -r requirements.txt
 RUN pip3 install selenium==3.8.0
 RUN pip3 install html5lib lxml boto3
 
+# install bs4
+RUN pip3 install beautifulsoup4
+RUN pip3 install bs4
+
 # Copia todos os arquivos que estão nesse diretorio para dentro da imagem
 COPY ./ .
 
