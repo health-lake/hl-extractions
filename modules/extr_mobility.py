@@ -2,6 +2,7 @@ from logging import exception
 import requests
 from datetime import date
 from utils.s3_writer_operator import HandlerS3Writer
+import io
 
 # CRIAÇÃO DE VARIÁVEIS
 FILE_NAME = 'global_mobility.csv'
@@ -27,7 +28,7 @@ class ExtractMOBILITY:
             s3_writer = HandlerS3Writer(
                 extracted_file=r.content,
                 extraction_name=FILE_NAME,
-                extraction_source=f'mobility' 
+                extraction_source="mobility" 
             )
         except Exception as e:
             print('UPLOAD ERROR')
