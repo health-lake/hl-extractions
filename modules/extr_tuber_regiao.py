@@ -141,4 +141,4 @@ try:
     Extract_Tuber_regiao().download()
 except exception as e:
     print(e)
-#Extract_Tuberculose() 
+#Extract_Tuberculose()
