@@ -15,7 +15,7 @@
     "source_path": "./modules/extr_vacina.py",
     "source_args": ""
   },
-  "TUBER-FX-ETARIA": {
+  "TUBFXETARIA": {
     "source_path": "./modules/extr_tuber.py",
     "source_args": ""
   },  

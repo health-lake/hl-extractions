@@ -18,7 +18,7 @@ import os
 
 
 
-class Extract_Tuberculose:
+class ExtractTUBFXETARIA:
     def __init__(self):
         self.url="https://datasus.saude.gov.br/acesso-a-informacao/casos-de-tuberculose-desde-2001-sinan/"
         self.driver=webdriver.Chrome()
@@ -148,7 +148,7 @@ class Extract_Tuberculose:
         self.driver.close()
 #if __name__=="__main__":
 try:
-    Extract_Tuberculose().download()
+    ExtractTUBFXETARIA().download()
 except Exception as e:
     print(e)
 #Extract_Tuberculose()
