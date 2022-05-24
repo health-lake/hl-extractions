@@ -26,5 +26,9 @@
   "MOBILITY": {
     "source_path": "./modules/extr_mobility.py",
     "source_args": ""
+  },
+  "ONCO": {
+    "source_path": "./modules/extr_oncologia.py",
+    "source_args": ""
   }
 }
