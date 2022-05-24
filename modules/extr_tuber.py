@@ -149,6 +149,6 @@ class Extract_Tuberculose:
 #if __name__=="__main__":
 try:
     Extract_Tuberculose().download()
-except exception as e:
+except Exception as e:
     print(e)
 #Extract_Tuberculose()
