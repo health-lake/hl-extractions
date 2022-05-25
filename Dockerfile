@@ -19,7 +19,7 @@ RUN apt-get install python3-pip -y
 RUN pip3 install -r requirements.txt
 
 # install selenium
-RUN pip3 install selenium==3.8.0
+#RUN pip3 install selenium==3.8.0
 RUN pip3 install html5lib lxml boto3
 
 # install bs4
