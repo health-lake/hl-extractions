@@ -15,9 +15,7 @@ from utils.chrome_driver import ChromeDriver
 from utils.s3_writer_operator import HandlerS3Writer
 #from modules.extr_dgbr import c
 
-
-
-class Extract_Tuber_regiao:
+class ExtractTUBERCULOSE:
     def __init__(self):
         self.url="https://datasus.saude.gov.br/acesso-a-informacao/casos-de-tuberculose-desde-2001-sinan/"
         #self.driver=webdriver.Chrome()
@@ -138,7 +136,7 @@ class Extract_Tuber_regiao:
         self.driver.close()
 #if __name__=="__main__":
 try:
-    Extract_Tuber_regiao().download()
-except exception as e:
+    ExtractTUBERCULOSE().download()
+except Exception as e:
     print(e)
 #Extract_Tuberculose() 
