@@ -130,8 +130,10 @@ class ExtractTUBERCULOSE:
                         print('O erro é {e}')
 
                 #CLICA NO BOTAO VOLTAR
-                self.driver.find_element_by_xpath('/html/body/div/div/div[3]/table[2]/tbody/tr/td/a').click()
-
+                try:
+                    self.driver.find_element_by_xpath('/html/body/div/div/div[3]/table[2]/tbody/tr/td/a').click()
+                except:
+                    self.driver.back()
 
         self.driver.close()
 #if __name__=="__main__":
